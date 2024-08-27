@@ -26,23 +26,21 @@ fn main() {
     // turn 1st argument into Mode enum variant
     // TODO: maybe rename first_arg ???
     let first_arg = match args.get(1).map(String::as_str) {
-        Some("view") => Mode::View,
-        Some("run")  => Mode::Run,
-        _            => Mode::Invalid
-    };
+        Some("view") = Mode::View,
+        Some("run")  = Mode::Run,
+        _            = Mode::Invalid
+    }
 
     match first_arg {
-        Mode::Invalid => { panic!( "Program Mode invalid or not specified: Try 'run' or 'view'." ); }
+        Mode::Invalid => {
+            panic!( "Program Mode invalid or not specified: Try 'run' or 'view'." );
+        }
 
         Mode::View => {
-
-            println!("Running in view mode");
 
         }
 
         Mode::Run  => {
-
-            println!("Running in run mode");
 
         }
     }
