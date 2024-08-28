@@ -1,7 +1,7 @@
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
-mod lib;
+// use lib::{Run, View}
 
 use std::env;
 use std::sync::{Arc, Mutex};
@@ -13,7 +13,7 @@ use std::sync::{Arc, Mutex};
 //
 // the perfect trivial example for using enums
 
-enum Mode { // TODO: maybe rename Mode enum ???
+enum Mode {
     View,
     Run, 
     Invalid
@@ -24,26 +24,27 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     // turn 1st argument into Mode enum variant
-    // TODO: maybe rename first_arg ???
-    let first_arg = match args.get(1).map(String::as_str) {
+    let mode_argument = match args.get(1).map(String::as_str) {
         Some("view") => Mode::View,
         Some("run")  => Mode::Run,
         _            => Mode::Invalid
     };
 
-    match first_arg {
+    match mode_argument {
+
+        // TODO: improve panic message
         Mode::Invalid => { panic!( "Program Mode invalid or not specified: Try 'run' or 'view'." ); }
 
+
+        // both modes should use the rest of the cli arguments
         Mode::View => {
-
             println!("Running in view mode");
-
+            // View::view(args)
         }
 
         Mode::Run  => {
-
             println!("Running in run mode");
-
+            // Run::run(args)
         }
     }
 }
