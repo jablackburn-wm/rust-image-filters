@@ -1,3 +1,8 @@
+//
+// created by J. Blackburn - Aug 26 2024
+//
+
+
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
