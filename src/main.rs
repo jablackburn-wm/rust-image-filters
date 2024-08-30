@@ -6,7 +6,8 @@
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
-// use lib::{Run, View}
+mod lib;
+use lib::{Run, View};
 
 use std::env;
 use std::sync::{Arc, Mutex};
@@ -38,18 +39,23 @@ fn main() {
     match mode_argument {
 
         // TODO: improve panic message
-        Mode::Invalid => { panic!( "Program Mode invalid or not specified: Try 'run' or 'view'." ); }
+        Mode::Invalid => { panic!( 
+   "
+    ******************* Image Filters Error ******************* 
 
+    Program Mode invalid or not specified: Try 'run' or 'view'. 
+    ex: cargo run -- view image.png
 
-        // both modes should use the rest of the cli arguments
+    ***********************************************************
+   " 
+        ); }
+
         Mode::View => {
-            println!("Running in view mode");
-            // View::view(args)
+            View::view(args)
         }
 
         Mode::Run  => {
-            println!("Running in run mode");
-            // Run::run(args)
+            Run::run(args)
         }
     }
 }
