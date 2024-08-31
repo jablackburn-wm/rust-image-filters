@@ -2,14 +2,12 @@
 // created by J. Blackburn - Aug 27 2024
 //
 
-// run function should get the second argument (the image argument) 
-// and print an error message if it is not specified, otherwise continue
+use image::{ImageBuffer, Rgba};
 
-pub fn run(args: Vec<String>) {
+type RawImageBuffer = ImageBuffer<Rgba<u8>, Vec<u8>>;
 
-    let image_argument: Option<&str> = args.get(2).map(String::as_str);
+pub fn run(image_buffer: RawImageBuffer, args: Vec<String>) {
 
-    let image_path: &str = image_argument.expect("Error: no image path specified"); // TODO: improve error message
+    println!("continuing in run mode");
 
-    println!("Image path exists, continuing in run mode with image: {}", image_path);
 }

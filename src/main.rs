@@ -36,9 +36,13 @@ fn main() {
         _            => Mode::Invalid
     };
 
+    // Both modes use the image file path, so defining it can be handled in main
+    // however view uses an arc mutex of the image buffer, so creating the actual image buffer 
+    // can be handled in the following  match statement
+    //
+
     match mode_argument {
 
-        // TODO: improve panic message
         Mode::Invalid => { panic!( 
    "
     ******************* Image Filters Error ******************* 
@@ -50,12 +54,45 @@ fn main() {
    " 
         ); }
 
+
         Mode::View => {
-            View::view(args)
+
+            // get image argument
+            let image_argument: Option<&str> = args.get(2).map(String::as_str);
+            let image_path: &str = image_argument.expect("Error: no image path specified"); // TODO: improve error message
+
+            // load image
+            println!("Attempting to load input image: {}", image_path); // TODO: improve info message
+
+            // view mode should take only an image buffer wrapped in arc mutex
+            let image_buffer = Arc::new( Mutex::new(
+                     image::open(image_path)
+                        .expect("Error: view mode couldnt find your image")
+                        .to_rgba8()
+            ));
+
+            View::view(image_buffer.clone())
+
         }
 
+
         Mode::Run  => {
-            Run::run(args)
+
+            // get image argument
+            let image_argument: Option<&str> = args.get(2).map(String::as_str);
+            let image_path: &str = image_argument.expect("Error: no image path specified"); // TODO: improve error message
+
+            // load image
+            println!("Attempting to load input image: {}", image_path); // TODO: improve info message
+
+            // run mode can deal with the raw image buffer without a shared reference, 
+            // and needs the rest of the arguments to infer image manipulation strategy
+            let image_buffer = image::open(image_path)
+                                    .expect("Error: run mode couldnt find your image")
+                                    .to_rgba();
+
+            Run::run(image_buffer, args)
+
         }
     }
 }
