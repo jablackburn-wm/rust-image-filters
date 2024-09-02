@@ -1,7 +1,17 @@
+/* LINKS (for quick navigation in vi)
+
+src/lib/mod.rs
+src/lib/
+
+Cargo.toml
+
+*/
+
+
+
 //
 // created by J. Blackburn - Aug 26 2024
 //
-
 
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
