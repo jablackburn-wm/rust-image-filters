@@ -15,6 +15,8 @@ use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
 use std::sync::{Arc, Mutex};
+use std::io::{stdin, stdout, Write};
+use std::thread;
 
 type SharedImageBuffer = Arc<Mutex<ImageBuffer<Rgba<u8>, Vec<u8>>>>;
 type SharedBoolean     = Arc<Mutex<bool>>;
@@ -100,10 +102,25 @@ pub fn view(image_buffer: SharedImageBuffer) {
     let mut app = ViewPanel::new(image_buffer.clone(), update_switch.clone());
 
     
+
+    // do stuff with image buffer in separate thread
+    let background_update_switch = update_switch.clone();
+    let background_thread = thread::spawn(move || {
+
+        let mut input = String::new();
+        println!("Enter anything to reload the image:");
+
+        stdin().read_line(&mut input).expect("Error: could not read user input");
+        let _ = stdout().flush();
+        println!("loaded input");
+
+        let mut locked_update_switch = background_update_switch.lock().unwrap();
+        *locked_update_switch = true; // toggle update switch
+
+    });
+
     // display image view panel
+    println!("Showing view panel");
     let native_options = eframe::NativeOptions::default();
     eframe::run_native("Image Filters View Panel", native_options, Box::new(|_cc| Ok(Box::new(app))));
-
-    // do stuff with image buffer
-
 }
