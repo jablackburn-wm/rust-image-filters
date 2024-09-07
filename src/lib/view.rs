@@ -83,7 +83,9 @@ impl eframe::App for ViewPanel {
 
                 let scaled_size = image_size * scale;
 
-                ui.add(egui::Image::new(texture).fit_to_exact_size(scaled_size));
+                ui.with_layout(egui::Layout::centered_and_justified(egui::Direction::TopDown), |ui| {
+                    ui.add(egui::Image::new(texture).fit_to_exact_size(scaled_size));
+                });
             }
 
         });

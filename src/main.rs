@@ -76,7 +76,7 @@ fn main() {
             // view mode should take only an image buffer wrapped in arc mutex
             let image_buffer = Arc::new( Mutex::new(
                      image::open(image_path)
-                        .expect("Error: view mode couldnt find your image")
+                        .expect("Error: view mode couldnt open your image") // TODO: improve error message
                         .to_rgba8()
             ));
 
@@ -97,7 +97,7 @@ fn main() {
             // run mode can deal with the raw image buffer without a shared reference, 
             // and needs the rest of the arguments to infer image manipulation strategy
             let image_buffer = image::open(image_path)
-                                    .expect("Error: run mode couldnt find your image")
+                                    .expect("Error: run mode couldnt open your image") // TODO: improve error message
                                     .to_rgba();
 
             Run::run(image_buffer, args)
