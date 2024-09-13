@@ -1,7 +1,8 @@
 /* LINKS (for quick navigation in vi)
 
 src/lib/mod.rs
-src/lib/
+src/lib
+src/lib/filters
 
 Cargo.toml
 

@@ -2,6 +2,7 @@
 
 src/main.rs
 src/lib/
+src/lib/filters
 
 */
 
@@ -11,12 +12,15 @@ src/lib/
 // created by J. Blackburn - Aug 27 2024
 //
 
+use crate::lib::filters;
+
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
 use std::sync::{Arc, Mutex};
 use std::io::{stdin, stdout, Write};
 use std::thread;
+
 
 type SharedImageBuffer = Arc<Mutex<ImageBuffer<Rgba<u8>, Vec<u8>>>>;
 type SharedBoolean     = Arc<Mutex<bool>>;
@@ -114,10 +118,17 @@ pub fn view(image_buffer: SharedImageBuffer) {
 
         stdin().read_line(&mut input).expect("Error: could not read user input");
         let _ = stdout().flush();
-        println!("loaded input");
+
+        // update image buffer
+
+        println!("Attempting to filter image");
+        filters::invert(image_buffer.clone());
+        println!("done filtering.");
+        
 
         let mut locked_update_switch = background_update_switch.lock().unwrap();
         *locked_update_switch = true; // toggle update switch
+        println!("update switch toggled");
 
     });
 
