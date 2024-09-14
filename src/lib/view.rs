@@ -101,39 +101,47 @@ impl eframe::App for ViewPanel {
 
 pub fn view(image_buffer: SharedImageBuffer) {
 
-    // create update switch
+        // create update switch
     let update_switch: SharedBoolean = Arc::new( Mutex::new( true ));
     
-    // create egui app with the buffer
+        // create egui app with the buffer & update switch
     let mut app = ViewPanel::new(image_buffer.clone(), update_switch.clone());
-
     
 
-    // do stuff with image buffer in separate thread
+        // do stuff with image buffer in separate thread
     let background_update_switch = update_switch.clone();
     let background_thread = thread::spawn(move || {
 
-        let mut input = String::new();
-        println!("Enter anything to reload the image:");
+            // print CLI menu options
+        // filter names? reset? undo? quit? save?
 
+
+            // get user input
+
+        /*
+        let mut input = String::new();
         stdin().read_line(&mut input).expect("Error: could not read user input");
         let _ = stdout().flush();
+        */
 
-        // update image buffer
 
-        println!("Attempting to filter image");
-        filters::invert(image_buffer.clone());
-        println!("done filtering.");
+
+            // do stuff with input
+        // Ex. of filter usage: filters::invert(image_buffer.clone());
+        //
+        // how to handle invalid input?
+        // how to avoid matching for every individual filter possibility? -> move to filters
+        // module, passing filter name argument
+        // extra parameters handled here or in filters? 
         
 
+        // toggle update switch to trigger reload
         let mut locked_update_switch = background_update_switch.lock().unwrap();
         *locked_update_switch = true; // toggle update switch
-        println!("update switch toggled");
 
     });
 
-    // display image view panel
-    println!("Showing view panel");
+        // display image view panel
     let native_options = eframe::NativeOptions::default();
     eframe::run_native("Image Filters View Panel", native_options, Box::new(|_cc| Ok(Box::new(app))));
 }
