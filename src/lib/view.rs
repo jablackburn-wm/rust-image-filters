@@ -106,6 +106,10 @@ pub fn view(image_buffer: SharedImageBuffer) {
     
         // create egui app with the buffer & update switch
     let mut app = ViewPanel::new(image_buffer.clone(), update_switch.clone());
+
+        // display image view panel
+    let native_options = eframe::NativeOptions::default();
+    eframe::run_native("Image Filters View Panel", native_options, Box::new(|_cc| Ok(Box::new(app))));
     
 
         // do stuff with image buffer in separate thread
@@ -141,7 +145,4 @@ pub fn view(image_buffer: SharedImageBuffer) {
 
     });
 
-        // display image view panel
-    let native_options = eframe::NativeOptions::default();
-    eframe::run_native("Image Filters View Panel", native_options, Box::new(|_cc| Ok(Box::new(app))));
 }
