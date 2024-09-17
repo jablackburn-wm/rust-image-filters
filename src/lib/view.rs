@@ -99,7 +99,15 @@ impl eframe::App for ViewPanel {
 }
 
 
-pub fn view(image_buffer: SharedImageBuffer) {
+
+
+
+
+
+
+pub fn view(image_buffer: SharedImageBuffer) { // TODO: change to accept static image buffer
+        
+        // create shared image buffer
 
         // create update switch
     let update_switch: SharedBoolean = Arc::new( Mutex::new( true ));
@@ -116,33 +124,103 @@ pub fn view(image_buffer: SharedImageBuffer) {
     let background_update_switch = update_switch.clone();
     let background_thread = thread::spawn(move || {
 
-            // print CLI menu options
-        // filter names? reset? undo? quit? save?
+            // initialize menu option enum
+        #[derive(PartialEq)]
+        enum MenuOption {
+            Empty, 
+            Filter, 
+            Reset, 
+            Save, 
+            Quit,
+        }
+
+        let mut menu_option = MenuOption::Empty;
+
+            // loop while menu option not quit
+        while menu_option != MenuOption::Quit {
+
+                // print CLI menu options
+            println!(
+    "
+    ******************* Image Filters Menu ******************* 
+
+    f - FILTER image buffer          r - RESET image to source      
+
+    s - SAVE image to path           q - QUIT
+
+    **********************************************************
+
+    Enter Option:
+    "
+            );
+
+                // get user input
+            let mut input = String::new();
+            stdin().read_line(&mut input).expect("Error: could not read user input");
+            let _ = stdout().flush();
+
+                // match against input for MenuOptions enum variants
+            menu_option = match String::as_str(&input) {
+                "f" => MenuOption::Filter,
+                "r" => MenuOption::Reset,
+                "s" => MenuOption::Save,
+                "q" => MenuOption::Quit,
+                _   => MenuOption::Empty
+            };
+
+                // match against menu_option for corresponding code branch
+            match menu_option {
+                MenuOption::Empty => {
+                    println!("Option invalid - try again.");
+                    continue;
+                }
 
 
-            // get user input
+                MenuOption::Save  => {
+                    println!("Saving image");
 
-        /*
-        let mut input = String::new();
-        stdin().read_line(&mut input).expect("Error: could not read user input");
-        let _ = stdout().flush();
-        */
+                    // get / create output path
+                    // save to output path
 
+                    continue;
+                }
 
+                MenuOption::Reset => {
+                    println!("Reloading Image from static buffer");
 
-            // do stuff with input
-        // Ex. of filter usage: filters::invert(image_buffer.clone());
-        //
-        // how to handle invalid input?
-        // how to avoid matching for every individual filter possibility? -> move to filters
-        // module, passing filter name argument
-        // extra parameters handled here or in filters? 
-        
+                        // pass to resetting method?
+                        
+                        // toggle update switch to trigger reload
+                    let mut locked_update_switch = background_update_switch.lock().unwrap();
+                    *locked_update_switch = true; 
 
-        // toggle update switch to trigger reload
-        let mut locked_update_switch = background_update_switch.lock().unwrap();
-        *locked_update_switch = true; // toggle update switch
+                    continue;
+                }
 
-    });
+                MenuOption::Filter => {
 
-}
+                        // Ex. of filter usage: filters::invert(image_buffer.clone());
+                        //
+                        // how to avoid matching for every individual filter possibility? -> move to filters
+                        // module, passing filter name argument
+                        // extra parameters handled in filters? 
+                        //
+                        // pass to filter handler method?
+                    
+                        // toggle update switch to trigget reload
+                    let mut locked_update_switch = background_update_switch.lock().unwrap();
+                    *locked_update_switch = true; 
+
+                    continue;
+                        
+                }
+
+                MenuOption::Quit  => { continue; }
+
+            } // end match against menu option
+
+        } // end while loop
+
+    }); // end background thread
+
+} // end view method

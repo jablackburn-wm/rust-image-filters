@@ -49,7 +49,6 @@ fn main() {
     // Both modes use the image file path, so defining it can be handled in main
     // however view uses an arc mutex of the image buffer, so creating the actual image buffer 
     // can be handled in the following  match statement
-    //
 
     match mode_argument {
 
@@ -66,6 +65,8 @@ fn main() {
 
 
         Mode::View => {
+
+            // TODO: Move image buffer creation to view module
 
             // get image argument
             let image_argument: Option<&str> = args.get(2).map(String::as_str);
