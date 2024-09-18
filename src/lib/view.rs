@@ -10,6 +10,7 @@ src/lib/filters
 
 //
 // created by J. Blackburn - Aug 27 2024
+// p> " 'Q' in normal mode enters Ex mode. You almost never want this.
 //
 
 use crate::lib::{filters, panel};
@@ -25,19 +26,22 @@ use std::thread;
 type SharedImageBuffer = Arc<Mutex<ImageBuffer<Rgba<u8>, Vec<u8>>>>;
 type SharedBoolean     = Arc<Mutex<bool>>;
 
-pub fn view(image_buffer: SharedImageBuffer) { // TODO: change to accept static image buffer
+pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) { 
         
         // create shared image buffer
+    let shareable_image_buffer: SharedImageBuffer = Arc::new(Mutex::new(image_buffer));;
 
         // create update switch
-    let update_switch: SharedBoolean = Arc::new( Mutex::new( true ));
+    let update_switch: SharedBoolean = Arc::new(Mutex::new(true));
     
-        // create egui app with the buffer & update switch
-    let mut app = panel::ViewPanel::new(image_buffer.clone(), update_switch.clone());
-
+        // create egui app with the shareable buffer & update switch
+    let mut app = panel::ViewPanel::new(shareable_image_buffer.clone(), update_switch.clone());
         // display image view panel
-    let native_options = eframe::NativeOptions::default();
-    eframe::run_native("Image Filters View Panel", native_options, Box::new(|_cc| Ok(Box::new(app))));
+    eframe::run_native(
+        "Image Filters View Panel", 
+        eframe::NativeOptions::default(), 
+        Box::new(|_cc| Ok(Box::new(app)))
+    );
     
 
         // do stuff with image buffer in separate thread
