@@ -9,7 +9,7 @@ src/lib/filters
 
 
 //
-// created by J. Blackburn - July  2024
+// created by J. Blackburn - Sept 17 2024
 //
 
 use eframe::egui;
