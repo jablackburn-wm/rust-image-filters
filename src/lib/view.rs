@@ -10,7 +10,6 @@ src/lib/filters
 
 //
 // created by J. Blackburn - Aug 27 2024
-// p> " 'Q' in normal mode enters Ex mode. You almost never want this.
 //
 
 use crate::lib::{filters, panel};
@@ -38,7 +37,7 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
 
         // do stuff with image buffer in separate thread
     let background_update_switch = update_switch.clone();
-    let background_thread = thread::spawn(move || {
+    let background_thread = thread::spawn(move || { // TODO: move thread to separate function
 
             // initialize menu option enum
         #[derive(PartialEq)]
