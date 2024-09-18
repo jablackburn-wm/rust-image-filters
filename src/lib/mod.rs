@@ -12,5 +12,8 @@ src/lib/
 //
 
 pub mod Run;
+
 pub mod View;
+pub mod panel;
+
 pub mod filters;
