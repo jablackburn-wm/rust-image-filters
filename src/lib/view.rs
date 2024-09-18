@@ -34,14 +34,6 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
         // create update switch
     let update_switch: SharedBoolean = Arc::new(Mutex::new(true));
     
-        // create egui app with the shareable buffer & update switch
-    let mut app = panel::ViewPanel::new(shareable_image_buffer.clone(), update_switch.clone());
-        // display image view panel
-    eframe::run_native(
-        "Image Filters View Panel", 
-        eframe::NativeOptions::default(), 
-        Box::new(|_cc| Ok(Box::new(app)))
-    );
     
 
         // do stuff with image buffer in separate thread
@@ -89,7 +81,7 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
                 "r" => MenuOption::Reset,
                 "s" => MenuOption::Save,
                 "q" => MenuOption::Quit,
-                _   => MenuOption::Empty
+                 _  => MenuOption::Empty
             };
 
                 // match against menu_option for corresponding code branch
@@ -146,5 +138,21 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
         } // end while loop
 
     }); // end background thread
+
+
+        // create egui app with the shareable buffer & update switch
+    let mut app = panel::ViewPanel::new(shareable_image_buffer.clone(), update_switch.clone());
+        // display image view panel
+    eframe::run_native(
+        "Image Filters View Panel", 
+        eframe::NativeOptions::default(), 
+        Box::new(|_cc| Ok(Box::new(app)))
+    );
+
+
+
+
+
+
 
 } // end view method
