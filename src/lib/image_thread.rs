@@ -2,10 +2,12 @@
 /*
 
 src/main.rs
+src/lib/filters
 src/lib
 
 */
 
+use crate::lib::filters;
 use image::{ImageBuffer, Rgba};
 
 use std::sync::{Arc, Mutex};
@@ -19,7 +21,7 @@ type SharedBoolean     = Arc<Mutex<bool>>;
 
 pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: SharedBoolean) {
     
-    let background_thread = thread::spawn(move || { // TODO: move thread to separate function
+    let background_thread = thread::spawn(move || { 
 
             // TODO:
         // add shared quit signal
@@ -121,7 +123,7 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                     stdin().read_line(&mut filter_name).expect("Error: could not read user input");
                     let _ = stdout().flush();
 
-                    // filter::filter(filter_name, backround_image_buffer.clone())
+                    filters::invert(image_buffer.clone());
 
                         // toggle update switch to trigger reload
                     let mut locked_update_switch = update_switch.lock().unwrap();
