@@ -33,8 +33,6 @@ pub fn invert(image_buffer: SharedImageBuffer) {
             locked_image_buffer.put_pixel(x, y, inverted_pixel);
         }
     }
-
-    locked_image_buffer.save("outputs/inverted_image.png").expect("Error: failed to save image"); // TODO: improve error message
 }
 
 
