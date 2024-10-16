@@ -15,5 +15,6 @@ pub mod Run;
 
 pub mod View;
 pub mod panel;
+pub mod image_thread;
 
 pub mod filters;
