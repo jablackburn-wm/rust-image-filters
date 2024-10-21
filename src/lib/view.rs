@@ -12,15 +12,12 @@ src/lib/filters
 // created by J. Blackburn - Aug 27 2024
 //
 
-use crate::lib::{filters, panel, image_thread};
+use crate::lib::{panel, image_thread};
 
 use eframe::egui;
 use image::{ImageBuffer, Rgba};
 
-use std::path::Path;
 use std::sync::{Arc, Mutex};
-use std::io::{stdin, stdout, Write};
-use std::thread;
 
 
 type SharedImageBuffer = Arc<Mutex<ImageBuffer<Rgba<u8>, Vec<u8>>>>;
