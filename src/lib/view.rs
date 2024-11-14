@@ -32,7 +32,6 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
     let update_switch: SharedBoolean = Arc::new(Mutex::new(true));
 
         // do stuff with image buffer in separate thread
-
     image_thread::start_background_thread(shareable_image_buffer.clone(), update_switch.clone());
 
         // create egui app with the shareable buffer & update switch
@@ -44,4 +43,4 @@ pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) {
         Box::new(|_cc| Ok(Box::new(app)))
     );
 
-} // end view method
+} 

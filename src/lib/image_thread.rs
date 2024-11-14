@@ -108,14 +108,6 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
 
                 MenuOption::Filter => {
 
-                        // Ex. of filter usage: filters::invert(image_buffer.clone());
-                        //
-                        // how to avoid matching for every individual filter possibility? -> move to filters
-                        // module, passing filter name argument
-                        // extra parameters handled in filters? 
-                        //
-                        // pass to filter handler method?
-                    
                     print!("Enter filter name: ");
                     let _ = stdout().flush();
 
@@ -123,7 +115,10 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                     stdin().read_line(&mut filter_name).expect("Error: could not read user input");
                     let _ = stdout().flush();
 
-                    filters::invert(image_buffer.clone());
+                    let filter_handler = filters::FilterHandler::new(image_buffer.clone());
+                    let _ = filter_handler.apply_filter(filter_name.trim());
+                    
+
 
                         // toggle update switch to trigger reload
                     let mut locked_update_switch = update_switch.lock().unwrap();
@@ -132,7 +127,7 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                     continue;
                 }
 
-                MenuOption::Quit  => { continue; }
+                MenuOption::Quit  => { break; }
 
             } // end match against menu option
 
