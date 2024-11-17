@@ -24,6 +24,12 @@ type SharedImageBuffer = Arc<Mutex<ImageBuffer<Rgba<u8>, Vec<u8>>>>;
 type SharedBoolean     = Arc<Mutex<bool>>;
 
 pub fn view(image_buffer: ImageBuffer<Rgba<u8>, Vec<u8>>) { 
+
+
+            // TODO:
+        // rebuild syncing threads to use atomic bools instead of arc mutex
+
+
         
         // create shared image buffer
     let shareable_image_buffer: SharedImageBuffer = Arc::new(Mutex::new(image_buffer));;

@@ -52,8 +52,7 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
 
     **********************************************************
 
-    Enter Option:
-    "
+    Enter Option: "
             );
 
                 // get user input
@@ -72,10 +71,17 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
 
                 // match against menu_option for corresponding code branch
             match menu_option {
+
+
                 MenuOption::Empty => {
+
+                            // TODO:
+                        // write cleaner error message
+                        
                     println!("Option invalid - try again.");
                     continue;
                 }
+
 
                 MenuOption::Save  => {
                     print!("Saving image - Specify output path:");
@@ -86,6 +92,14 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                     stdin().read_line(&mut output_path).expect("Error: could not read user input");
                     let _ = stdout().flush();
 
+                            // TODO:
+                        // if output path is empty, create default output path
+                        //
+                        //      Ex:
+                        // ./outputs/(filter-key)-image.png
+                        //
+
+
                         // save to output path
                     let locked_image_buffer = image_buffer.lock().unwrap();
                     locked_image_buffer.save(Path::new(output_path.trim())); 
@@ -94,14 +108,19 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                 }
 
                 MenuOption::Reset => {
+
                     println!("loading original image");
                     println!("This actually does nothing right now");
-
-                        // pass control to resetting method?
+                        
+                            // TODO:
+                        // pass control to resetting method
 
                         // toggle update switch to trigger reload
                     let mut locked_update_switch = update_switch.lock().unwrap();
                     *locked_update_switch = true; 
+
+                            // TODO: 
+                        // figure out how to await reset 
 
                     continue;
                 }
@@ -127,7 +146,13 @@ pub fn start_background_thread(image_buffer: SharedImageBuffer, update_switch: S
                     continue;
                 }
 
-                MenuOption::Quit  => { break; }
+                MenuOption::Quit  => { 
+
+                            // TODO:
+                        // add shared quit signal, telling view panel to die
+
+                    break; 
+                }
 
             } // end match against menu option
 
