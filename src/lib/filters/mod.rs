@@ -1,10 +1,6 @@
-/* LINKS
-
-src/main.rs
-src/lib
-src/lib/filters
-
-*/
+// 
+// created by J. Blackburn - Nov 16 2024
+//
 
 mod invert;
 pub use invert::invert;

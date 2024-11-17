@@ -1,11 +1,6 @@
-// LINKS
-/*
-
-src/main.rs
-src/lib/filters
-src/lib
-
-*/
+//
+// created by J. Blackburn - Nov 16 2024
+//
 
 use crate::lib::filters;
 use image::{ImageBuffer, Rgba};

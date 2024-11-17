@@ -1,16 +1,10 @@
-/* LINKS
-
-src/main.rs
-src/lib/
-src/lib/filters
-
-*/
-
-
-
 //
 // created by J. Blackburn - Aug 27 2024
 //
+
+// view synchronizes 2 threads: the view panel and image thread
+// view panel handles displaying the contents of image buffer, 
+// image thread prints menu options to the terminal and handles user input
 
 use crate::lib::{panel, image_thread};
 

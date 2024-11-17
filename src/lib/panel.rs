@@ -1,13 +1,3 @@
-/* LINKS
-
-src/main.rs
-src/lib/
-src/lib/filters
-
-*/
-
-
-
 //
 // created by J. Blackburn - Sept 17 2024
 //

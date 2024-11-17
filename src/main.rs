@@ -1,30 +1,17 @@
-/* LINKS (for quick navigation in vi)
-
-src/lib/mod.rs
-src/lib
-src/lib/filters
-
-Cargo.toml
-
-*/
-
-
-
 //
 // created by J. Blackburn - Aug 26 2024
 //
-
-
-mod lib;
-use lib::{Run, View};
-use image::{ImageBuffer, Rgba};
-use std::env;
 
 // main function should start by determining if the first cmd line 
 // argument is "run", "view", or invalid
 //
 // then open an image buffer of the image 
 // and pass control to the view and run methods
+
+mod lib;
+use lib::{Run, View};
+use image::{ImageBuffer, Rgba};
+use std::env;
 
     // TODO:
         // improve error messages

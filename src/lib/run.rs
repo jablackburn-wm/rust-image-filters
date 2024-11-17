@@ -1,15 +1,10 @@
-/* LINKS
-
-src/main.rs
-src/lib
-
-*/
-
-
-
 //
 // created by J. Blackburn - Aug 27 2024
 //
+
+
+    // TODO:
+// Add run mode for batch filtering
 
 use image::{ImageBuffer, Rgba};
 
